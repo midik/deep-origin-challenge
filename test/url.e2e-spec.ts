@@ -1,20 +1,33 @@
 import * as request from 'supertest';
-import { INestApplication } from '@nestjs/common';
+import { ClassSerializerInterceptor, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import type { CreateUrlDto } from '../src/url/dto/create-url.dto';
+import type { CreateUrlRequestDto } from '../src/url/dto/create-url.request.dto';
 import { UrlService } from '../src/url/url.service';
 import { UrlModule } from '../src/url/url.module';
 import { UrlShortenerModule } from '../src/url-shortener/url-shortener.module';
 import { UserModule } from '../src/user/user.module';
 import { UrlTrackModule } from '../src/url-track/url-track.module';
 import { DbModule } from '../src/prisma-service/db.module';
+import { PrismaClient } from '@prisma/client';
+import { Reflector } from '@nestjs/core';
+import { UrlResponseDto } from '../src/url/dto/create-url.response.dto';
+import { Url } from '../src/url/entities/url.entity';
 
 describe('e2e / url ', () => {
   let app: INestApplication;
 
+  const userId = 'b9077855-7290-4c63-a13a-33f32f95840e';
+
   const mockData = {
     url: 'https://google.com',
-  } as CreateUrlDto;
+  } as CreateUrlRequestDto;
+
+  const expectedResponse = {
+    baseUrl: 'https://short.ly',
+    id: 'cm6wdmmen0001wg2f9dizg82s',
+    url: mockData.url,
+    userId,
+  };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -29,8 +42,18 @@ describe('e2e / url ', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.useGlobalInterceptors(
+      new ClassSerializerInterceptor(app.get(Reflector), {
+        // hide all response DTO fields by default
+        // excludeExtraneousValues: true,
+      }),
+    );
 
     await app.init();
+
+    // danger zone :)
+    const prisma = new PrismaClient();
+    await prisma.url.deleteMany();
   });
 
   // since we runInBand this, we set our expectations to intermediate states,
@@ -50,28 +73,31 @@ describe('e2e / url ', () => {
       const response = await request(app.getHttpServer())
         .get('/url')
         .expect(200);
-      expect(response.body).toEqual(`This action returns all url`);
+      expect(response.body).toEqual([]);
     });
   });
 
   describe('POST /url', () => {
     describe('positive', () => {
       it('should return proper URL', async () => {
-        const response = await request(void app.getHttpServer())
+        const response = await request(app.getHttpServer())
           .post('/url')
           .send(mockData)
-          .expect(200);
+          .expect(201);
 
-        expect(response.body).toEqual({
-          id: expect.any(String) as string,
-          ...mockData,
-        });
+        const body = response.body as UrlResponseDto;
+
+        expect(body.id).toEqual(expect.any(String));
+        expect(body.url).toEqual(mockData.url);
+        expect(body.slug).toEqual(expect.any(String));
+        expect(body.baseUrl).toEqual(expectedResponse.baseUrl);
+        expect(body.userId).toEqual(userId);
       });
     });
 
     describe.skip('negative', () => {
       it('should return 400 on empty slug', async () => {
-        await request(void app.getHttpServer())
+        await request(app.getHttpServer())
           .post('/url')
           .send({
             ...mockData,
@@ -83,15 +109,14 @@ describe('e2e / url ', () => {
   });
 
   it('should return one record', async () => {
-    const response = await request(void app.getHttpServer())
-      .get('/url')
-      .expect(200);
+    const response = await request(app.getHttpServer()).get('/url').expect(200);
+    const body = response.body as Url[];
+    const item = body[0];
 
-    expect(response.body).toEqual([
-      {
-        id: expect.any(String) as string,
-        ...mockData,
-      },
-    ]);
+    expect(item.id).toEqual(expect.any(String));
+    expect(item.url).toEqual(mockData.url);
+    expect(item.slug).toEqual(expect.any(String));
+    expect(item.baseUrl).toEqual(expectedResponse.baseUrl);
+    expect(item.userId).toEqual(userId);
   });
 });
