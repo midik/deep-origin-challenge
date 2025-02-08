@@ -9,7 +9,10 @@ export class UrlService {
   constructor(
     private readonly dbService: DbService,
     private readonly urlShortenerService: UrlShortenerService,
-  ) {}
+  ) {
+    // // @ts-ignore
+    // dbService.$on<any>('query', (event) => console.log(event));
+  }
 
   async create(data: CreateUrlDto) {
     // todo move to config
