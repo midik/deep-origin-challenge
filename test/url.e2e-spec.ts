@@ -1,5 +1,9 @@
 import * as request from 'supertest';
-import { ClassSerializerInterceptor, INestApplication, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import type { CreateUrlRequestDto } from '../src/url/dto/create-url.request.dto';
 import { UrlService } from '../src/url/url.service';
@@ -12,6 +16,7 @@ import { PrismaClient } from '@prisma/client';
 import { Reflector } from '@nestjs/core';
 import { UrlResponseDto } from '../src/url/dto/create-url.response.dto';
 import { Url } from '../src/url/entities/url.entity';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 describe('e2e / url ', () => {
   let app: INestApplication;
@@ -38,6 +43,12 @@ describe('e2e / url ', () => {
         UserModule,
         UrlTrackModule,
         DbModule,
+        ThrottlerModule.forRoot([
+          {
+            ttl: 60000,
+            limit: 100,
+          },
+        ]),
       ],
     }).compile();
 

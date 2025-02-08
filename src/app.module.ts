@@ -6,6 +6,7 @@ import { UrlModule } from './url/url.module';
 import { UserModule } from './user/user.module';
 import { UrlTrackModule } from './url-track/url-track.module';
 import { DbModule } from './prisma-service/db.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -14,6 +15,12 @@ import { DbModule } from './prisma-service/db.module';
     UrlModule,
     UserModule,
     UrlTrackModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService],
