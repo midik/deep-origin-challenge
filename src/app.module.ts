@@ -9,11 +9,11 @@ import { DbModule } from './prisma-service/db.module';
 
 @Module({
   imports: [
+    DbModule,
     UrlShortenerModule,
     UrlModule,
     UserModule,
     UrlTrackModule,
-    DbModule,
   ],
   controllers: [AppController],
   providers: [AppService],

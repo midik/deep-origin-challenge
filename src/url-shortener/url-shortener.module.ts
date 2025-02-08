@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
+import { UrlShortenerService } from './url-shortener.service';
 
-@Module({})
+@Module({
+  providers: [UrlShortenerService],
+  exports: [UrlShortenerService],
+})
 export class UrlShortenerModule {}
