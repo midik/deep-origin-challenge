@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUrlDto } from './dto/create-url.dto';
+import { CreateUrlRequestDto } from './dto/create-url.request.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
 import { DbService } from '../prisma-service/db.service';
 import { UrlShortenerService } from '../url-shortener/url-shortener.service';
@@ -14,13 +14,13 @@ export class UrlService {
     // dbService.$on<any>('query', (event) => console.log(event));
   }
 
-  async create(data: CreateUrlDto) {
+  async create(data: CreateUrlRequestDto) {
     // todo move to config
     const baseUrl = 'https://short.ly';
 
     const randomSlug = this.urlShortenerService.getRandomSlug();
 
-    await this.dbService.url.create({
+    return this.dbService.url.create({
       data: {
         url: data.url,
         slug: randomSlug,
@@ -28,10 +28,6 @@ export class UrlService {
         userId: data.userId,
       },
     });
-
-    return {
-      url: `${baseUrl}/${randomSlug}`,
-    };
   }
 
   findAll() {

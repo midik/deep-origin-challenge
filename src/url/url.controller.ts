@@ -1,26 +1,21 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { UrlService } from './url.service';
-import { CreateUrlDto } from './dto/create-url.dto';
+import { CreateUrlRequestDto } from './dto/create-url.request.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
+import { UrlResponseDto } from './dto/create-url.response.dto';
 
 @Controller('url')
 export class UrlController {
   constructor(private readonly urlService: UrlService) {}
 
   @Post()
-  create(@Body() createUrlDto: CreateUrlDto) {
-    return this.urlService.create({
+  async create(@Body() createUrlDto: CreateUrlRequestDto) {
+    const url = await this.urlService.create({
       ...createUrlDto,
       userId: 'b9077855-7290-4c63-a13a-33f32f95840e',
     });
+
+    return new UrlResponseDto(url);
   }
 
   @Get()

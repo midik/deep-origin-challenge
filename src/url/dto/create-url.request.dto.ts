@@ -1,4 +1,4 @@
-export class CreateUrlDto {
+export class CreateUrlRequestDto {
   url: string;
   userId: string;
 }
