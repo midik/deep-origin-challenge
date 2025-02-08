@@ -31,5 +31,5 @@ model Url {
   baseUrl String
   slug    String @unique
   userId  String
-  User    User   @relation(fields: [userId], references: [id])
+  User    User   @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: NoAction)
 }
