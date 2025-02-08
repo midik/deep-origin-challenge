@@ -2,25 +2,40 @@ import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { UrlService } from './url.service';
 import { CreateUrlRequestDto } from './dto/create-url.request.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
-import { UrlResponseDto } from './dto/create-url.response.dto';
+import { CreateUrlResponseDto } from './dto/create-url.response.dto';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Url } from './entities/url.entity';
+import { GetUrlResponseDto } from './dto/get-url.response.dto';
 
 @Controller('url')
 export class UrlController {
   constructor(private readonly urlService: UrlService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create (shorten) an URL' })
+  @ApiResponse({
+    status: 201,
+    type: CreateUrlResponseDto,
+  })
   async create(@Body() createUrlDto: CreateUrlRequestDto) {
     const url = await this.urlService.create({
       ...createUrlDto,
       userId: 'b9077855-7290-4c63-a13a-33f32f95840e',
     });
 
-    return new UrlResponseDto(url);
+    return new CreateUrlResponseDto(url);
   }
 
   @Get()
-  findAll() {
-    return this.urlService.findAll();
+  @ApiOperation({ summary: 'Get all URLs' })
+  @ApiResponse({
+    status: 200,
+    type: GetUrlResponseDto,
+    isArray: true,
+  })
+  async findAll() {
+    const items = await this.urlService.findAll();
+    return items.map((url: Url) => new GetUrlResponseDto(url));
   }
 
   @Get(':id')

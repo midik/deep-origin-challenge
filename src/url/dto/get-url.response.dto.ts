@@ -1,11 +1,7 @@
 import { Url } from '../entities/url.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateUrlResponseDto extends Url {
-  // control visibility here
-  // @Expose()
-  // @Exclude()
-
+export class GetUrlResponseDto extends Url {
   @ApiProperty()
   id: string;
 
@@ -21,7 +17,7 @@ export class CreateUrlResponseDto extends Url {
   @ApiProperty()
   userId: string;
 
-  constructor(partial: Partial<CreateUrlResponseDto>) {
+  constructor(partial: Partial<GetUrlResponseDto>) {
     super();
     Object.assign(this, partial);
   }

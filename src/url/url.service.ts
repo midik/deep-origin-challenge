@@ -3,6 +3,7 @@ import { CreateUrlRequestDto } from './dto/create-url.request.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
 import { DbService } from '../prisma-service/db.service';
 import { UrlShortenerService } from '../url-shortener/url-shortener.service';
+import { GetUrlResponseDto } from './dto/get-url.response.dto';
 
 @Injectable()
 export class UrlService {

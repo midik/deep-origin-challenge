@@ -14,9 +14,9 @@ import { UrlTrackModule } from '../src/url-track/url-track.module';
 import { DbModule } from '../src/prisma-service/db.module';
 import { PrismaClient } from '@prisma/client';
 import { Reflector } from '@nestjs/core';
-import { UrlResponseDto } from '../src/url/dto/create-url.response.dto';
-import { Url } from '../src/url/entities/url.entity';
+import { CreateUrlResponseDto } from '../src/url/dto/create-url.response.dto';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { GetUrlResponseDto } from '../src/url/dto/get-url.response.dto';
 
 describe('e2e / url ', () => {
   let app: INestApplication;
@@ -98,7 +98,7 @@ describe('e2e / url ', () => {
           .send(mockData)
           .expect(201);
 
-        const body = response.body as UrlResponseDto;
+        const body = response.body as CreateUrlResponseDto;
 
         expect(body.id).toEqual(expect.any(String));
         expect(body.url).toEqual(mockData.url);
@@ -123,7 +123,7 @@ describe('e2e / url ', () => {
 
   it('should return one record', async () => {
     const response = await request(app.getHttpServer()).get('/url').expect(200);
-    const body = response.body as Url[];
+    const body = response.body as GetUrlResponseDto[];
     const item = body[0];
 
     expect(item.id).toEqual(expect.any(String));
