@@ -1,6 +1,7 @@
 export class Url {
-  id: number;
+  id: string;
   url: string;
+  baseUrl: string;
   slug: string;
-  userId: number;
+  userId: string;
 }

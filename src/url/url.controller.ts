@@ -17,7 +17,10 @@ export class UrlController {
 
   @Post()
   create(@Body() createUrlDto: CreateUrlDto) {
-    return this.urlService.create(createUrlDto);
+    return this.urlService.create({
+      ...createUrlDto,
+      userId: 'qwe',
+    });
   }
 
   @Get()
