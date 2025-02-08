@@ -35,18 +35,22 @@ export class UrlService {
   }
 
   findAll() {
-    return `This action returns all url`;
+    return this.dbService.url.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} url`;
+  findOne(id: string) {
+    return this.dbService.url.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
-  update(id: number, updateUrlDto: UpdateUrlDto) {
+  update(id: string, updateUrlDto: UpdateUrlDto) {
     return `This action updates a #${id} url`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} url`;
   }
 }
