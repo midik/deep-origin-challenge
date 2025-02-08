@@ -1,0 +1,12 @@
+services:
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    container_name: db
+    ports:
+      - 15432:5432
+    environment:
+        POSTGRES_USER: deep
+        POSTGRES_PASSWORD: deep
+        POSTGRES_DB: deep
