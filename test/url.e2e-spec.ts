@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import { ClassSerializerInterceptor, INestApplication } from '@nestjs/common';
+import { ClassSerializerInterceptor, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import type { CreateUrlRequestDto } from '../src/url/dto/create-url.request.dto';
 import { UrlService } from '../src/url/url.service';
@@ -42,6 +42,8 @@ describe('e2e / url ', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+
+    app.useGlobalPipes(new ValidationPipe({}));
     app.useGlobalInterceptors(
       new ClassSerializerInterceptor(app.get(Reflector), {
         // hide all response DTO fields by default
@@ -95,13 +97,13 @@ describe('e2e / url ', () => {
       });
     });
 
-    describe.skip('negative', () => {
-      it('should return 400 on empty slug', async () => {
+    describe('negative', () => {
+      it('should return 400 for non-valid url', async () => {
         await request(app.getHttpServer())
           .post('/url')
           .send({
             ...mockData,
-            slug: '',
+            url: 'not-a-url',
           })
           .expect(400);
       });
