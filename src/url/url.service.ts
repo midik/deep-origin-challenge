@@ -33,7 +33,14 @@ export class UrlService {
   }
 
   findAll() {
-    return this.dbService.url.findMany();
+    return this.dbService.url.findMany({
+      include: {
+        User: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   findOne(id: string) {

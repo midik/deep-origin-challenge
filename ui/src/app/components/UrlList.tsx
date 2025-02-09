@@ -17,6 +17,8 @@ function UrlList({
   handleDeleteUrl: (id: string) => void;
   fetchUrls: () => void;
 }) {
+
+  console.log({ urls, isEditMode, handleEditUrl, handleDeleteUrl, fetchUrls });
   return (
     <div>
       <table>
@@ -45,6 +47,7 @@ function UrlList({
                 <td className="original-url">
                   <a href={url.url}>{url.url}</a>
                 </td>
+                <td className="author">{url.User.email}</td>
                 <td className="visits">{url.visits}</td>
                 <td className="datetime">
                   {url.lastVisitedAt ? new Date(url.lastVisitedAt).toISOString() : '-'}

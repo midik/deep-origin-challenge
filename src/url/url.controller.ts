@@ -28,7 +28,7 @@ export class UrlController {
   async create(@Body() createUrlDto: CreateUrlRequestDto) {
     const url = await this.urlService.create({
       ...createUrlDto,
-      userId: 'b9077855-7290-4c63-a13a-33f32f95840e',
+      userId: 'b9077855-7290-4c63-a13a-33f32f95840e', // default user :)
     });
 
     return new CreateUrlResponseDto(url);

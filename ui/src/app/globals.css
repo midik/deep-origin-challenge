@@ -60,7 +60,12 @@ td.visits {
     text-align: right;
 }
 
+td.author {
+    width: 140px;
+    text-align: left;
+}
+
 td.datetime {
-    width: 300px;
+    width: 200px;
     text-align: right;
 }
