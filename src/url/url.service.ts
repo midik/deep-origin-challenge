@@ -3,7 +3,6 @@ import { CreateUrlRequestDto } from './dto/create-url.request.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
 import { DbService } from '../prisma-service/db.service';
 import { UrlShortenerService } from '../url-shortener/url-shortener.service';
-import { GetUrlResponseDto } from './dto/get-url.response.dto';
 
 @Injectable()
 export class UrlService {
@@ -44,10 +43,19 @@ export class UrlService {
   }
 
   update(id: string, updateUrlDto: UpdateUrlDto) {
-    return `This action updates a #${id} url`;
+    return this.dbService.url.update({
+      where: {
+        id,
+      },
+      data: updateUrlDto,
+    });
   }
 
   remove(id: string) {
-    return `This action removes a #${id} url`;
+    return this.dbService.url.delete({
+      where: {
+        id,
+      },
+    });
   }
 }
