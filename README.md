@@ -1,6 +1,6 @@
-## Description
+## URL Shortener
 
-This project is a full-stack "URL Shortener" application, created as a solution for a test assignment. It is built with NestJS, NextJS/React, and PostgreSQL.
+This project is a full-stack application, created as a solution for a test assignment. It is built with NestJS, NextJS/React, and PostgreSQL.
 
 It allows users to create shortened versions of links to make them easier to share and remember. For example, a long URL like `https://some.place.example.com/foo/bar/biz` can be shortened to `https://short.ly/abc123`.
 
