@@ -24,6 +24,7 @@ export async function middleware(request: NextRequest) {
       acc[url.slug] = url;
       return acc;
     }, {});
+    console.info(`fetched ${urls.length} URL entries`);
   }
 
   if (!urlMap) {
@@ -34,6 +35,8 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname.slice(1);
   const urlEntry = urlMap[pathname];
 
+  console.info(urlEntry);
+
   if (urlEntry) {
     // increment tracking count (no wait)
     api.patchUrlTracking({ id: urlEntry.id })
@@ -41,11 +44,13 @@ export async function middleware(request: NextRequest) {
       .catch((err) => console.error(err));
 
     const destination = urlEntry.url;
+    console.log(`redirecting to ${destination}`);
     return NextResponse.redirect(destination, 307);
   }
 
   // no redirect found, redirect to 404
   // todo fix this
   const base = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3001';
+  console.log(`redirecting to 404`);
   return NextResponse.rewrite(`${base}/404`);
 }
