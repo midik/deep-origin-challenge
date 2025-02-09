@@ -55,4 +55,13 @@ export const api = {
     });
     return await response.json();
   },
+
+  patchUrlTracking: async ({ id }: { id: string }) => {
+    const response = await fetch(`${backendUrl}/url/${id}/hit`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ id }),
+    });
+    return await response.json();
+  }
 };

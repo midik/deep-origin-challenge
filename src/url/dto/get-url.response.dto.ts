@@ -17,6 +17,12 @@ export class GetUrlResponseDto extends Url {
   @ApiProperty()
   userId: string;
 
+  @ApiProperty()
+  visits: number;
+
+  @ApiProperty()
+  lastVisitedAt: Date;
+
   constructor(partial: Partial<GetUrlResponseDto>) {
     super();
     Object.assign(this, partial);

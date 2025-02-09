@@ -56,6 +56,11 @@ export class UrlController {
     return this.urlService.update(id, updateUrlDto);
   }
 
+  @Patch(':id/hit')
+  hit(@Param('id') id: string) {
+    return this.urlService.hit(id);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.urlService.remove(id);

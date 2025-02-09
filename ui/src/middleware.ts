@@ -35,6 +35,11 @@ export async function middleware(request: NextRequest) {
   const redirectData = (await urlMap[pathname]) as GetUrlResponseDto;
 
   if (redirectData) {
+    // increment tracking count (no wait)
+    api.patchUrlTracking({ id: redirectData.id })
+      .then(() => console.log(`hit: ${redirectData.id}`))
+      .catch((err) => console.error(err));
+
     const destination = redirectData.url;
     return NextResponse.redirect(destination, 307);
   }

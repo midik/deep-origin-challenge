@@ -3,5 +3,7 @@ export class Url {
   url: string;
   baseUrl: string;
   slug: string;
+  visits: number;
+  lastVisitedAt: Date;
   userId: string;
 }

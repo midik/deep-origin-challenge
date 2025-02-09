@@ -53,6 +53,20 @@ export class UrlService {
     });
   }
 
+  hit(id: string) {
+    return this.dbService.url.update({
+      where: {
+        id,
+      },
+      data: {
+        visits: {
+          increment: 1,
+        },
+        lastVisitedAt: new Date(),
+      },
+    });
+  }
+
   remove(id: string) {
     return this.dbService.url.delete({
       where: {
