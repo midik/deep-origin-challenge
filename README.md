@@ -4,11 +4,20 @@ This project is a full-stack "URL Shortener" application, created as a solution 
 
 It allows users to create shortened versions of links to make them easier to share and remember. For example, a long URL like `https://some.place.example.com/foo/bar/biz` can be shortened to `https://short.ly/abc123`.
 
-## Setting up the project
+## Running the project
+
+### Docker mode
+This stack can be run using Docker Compose:
+```bash
+docker compose up -d
+```
+This will spin up all required containers, including the API and the frontend. You can access the frontend at http://localhost:3001.
+
 ### Development mode
 
 #### Prerequisites
 By default, backend expects PostgreSQL serving by the following URL: `postgresql://deep:deep@localhost:5432/deep`. This can be changed in the `/.env` file.
+
 As an option, PostgresSQL can be spin up using Docker:
 ```bash
 docker run --name postgres-dev -e POSTGRES_PASSWORD=deep -e POSTGRES_USER=deep -e POSTGRES_DB=deep -p 5432:5432 -d postgres
@@ -33,12 +42,6 @@ npm run dev
 ```
 This will start the frontend on http://localhost:3001
 
-### Docker mode
-This stack can be run using Docker Compose:
-```bash
-docker compose up -d
-```
-This will spin up all required containers, including the API and the frontend. You can access the frontend at http://localhost:3001.
 
 ## Technical requirements
 
