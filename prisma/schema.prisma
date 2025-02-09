@@ -19,17 +19,13 @@ model User {
   Url   Url[]
 }
 
-model UrlTrack {
-  id            String    @id @default(cuid())
-  visits        Int       @default(0)
-  lastVisitedAt DateTime?
-}
-
 model Url {
   id      String @id @default(cuid())
   url     String
   baseUrl String
   slug    String @unique
   userId  String
+  visits        Int       @default(0)
+  lastVisitedAt DateTime?
   User    User   @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: NoAction)
 }
