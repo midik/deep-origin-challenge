@@ -15,10 +15,11 @@ export const api = {
       method: 'GET',
       headers,
     });
-    if (response.ok) {
-      return response.json();
+    if (!response.ok) {
+      console.error(response);
+      throw new Error('Something went wrong');
     }
-    console.error('Error:', response.statusText);
+    return response.json();
   },
 
   postUrl: async ({ url }: { url: string }): Promise<string> => {
@@ -32,8 +33,10 @@ export const api = {
     });
 
     if (!response.ok) {
+      console.error(response);
       throw new Error('Something went wrong');
     }
+
     const { baseUrl, slug } = await response.json();
     return `${baseUrl}/${slug}`;
   },
@@ -44,6 +47,11 @@ export const api = {
       headers,
       body: JSON.stringify({ slug }),
     });
+
+    if (!response.ok) {
+      console.error(response);
+      throw new Error('Something went wrong');
+    }
     return response.json();
   },
 
@@ -53,6 +61,11 @@ export const api = {
       headers,
       body: JSON.stringify({ id }),
     });
+
+    if (!response.ok) {
+      console.error(response);
+      throw new Error('Something went wrong');
+    }
     return await response.json();
   },
 
@@ -62,6 +75,10 @@ export const api = {
       headers,
       body: JSON.stringify({ id }),
     });
+    if (!response.ok) {
+      console.error(response);
+      throw new Error('Something went wrong');
+    }
     return await response.json();
   }
 };
