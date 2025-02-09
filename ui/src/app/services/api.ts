@@ -2,12 +2,18 @@
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || 'http://localhost:3000';
 
+const headers = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+};
+
+
 export const api = {
 
   getUrls: async () => {
     const response = await fetch(`${backendUrl}/url`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
     });
     if (response.ok) {
       return response.json();
@@ -18,7 +24,7 @@ export const api = {
   postUrl: async ({ url }: { url: string }): Promise<string> => {
     const response = await fetch(`${backendUrl}/url`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({
         url,
         // userId: 'b9077855-7290-4c63-a13a-33f32f95840e', // todo
@@ -35,10 +41,7 @@ export const api = {
   patchUrl: async ({ id, slug }: { id: string; slug: string }) => {
     const response = await fetch(`${backendUrl}/url/${id}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers,
       body: JSON.stringify({ slug }),
     });
     return response.json();
@@ -47,10 +50,7 @@ export const api = {
   deleteUrl: async ({ id }: { id: string }) => {
     const response = await fetch(`${backendUrl}/url/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers,
       body: JSON.stringify({ id }),
     });
     return await response.json();

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { api } from '@/app/services/api';
 import { GetUrlResponseDto } from '../../src/url/dto/get-url.response.dto';
-import { headers } from 'next/headers';
 
 
 let urlMap: string[] | null = null;
@@ -41,7 +40,6 @@ export async function middleware(request: NextRequest) {
   }
 
   // no redirect found, redirect to 404
-
   const base = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3001';
   console.log({ base });
 
