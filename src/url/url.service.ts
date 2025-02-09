@@ -3,6 +3,7 @@ import { CreateUrlRequestDto } from './dto/create-url.request.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
 import { DbService } from '../prisma-service/db.service';
 import { UrlShortenerService } from '../url-shortener/url-shortener.service';
+import * as process from 'node:process';
 
 @Injectable()
 export class UrlService {
@@ -15,8 +16,9 @@ export class UrlService {
   }
 
   async create(data: CreateUrlRequestDto) {
-    // todo move to config
-    const baseUrl = 'https://short.ly';
+    // TODO stick to frontend-based redirects for now
+    // const baseUrl = 'https://short.ly';
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3001';
 
     const randomSlug = this.urlShortenerService.getRandomSlug();
 
