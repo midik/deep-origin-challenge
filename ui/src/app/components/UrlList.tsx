@@ -4,7 +4,13 @@ import React from 'react';
 import { GetUrlResponseDto } from '../../../../src/url/dto/get-url.response.dto';
 import UrlListActions from '@/app/components/UrlListActions';
 
-function UrlList({ urls = [] }: { urls: GetUrlResponseDto[] }) {
+function UrlList({
+  urls = [],
+  handleEditUrl,
+}: {
+  urls: GetUrlResponseDto[],
+  handleEditUrl: (id: string) => void,
+}) {
   return (
     <div>
       <table>
@@ -14,7 +20,7 @@ function UrlList({ urls = [] }: { urls: GetUrlResponseDto[] }) {
             return (
               <tr key={'tr-' + url.id}>
                 <td>
-                  <UrlListActions id={url.id} />
+                  <UrlListActions id={url.id} handleEditUrl={handleEditUrl} />
                 </td>
                 <td className="short-url">
                   <a href={shortUrl}>{shortUrl}</a>

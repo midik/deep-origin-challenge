@@ -3,35 +3,28 @@
 import React from 'react';
 import { api } from '@/app/services/api';
 
-async function handleEdit(e: React.MouseEvent<HTMLButtonElement>, id: string) {
-  e.preventDefault();
 
-  try {
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/url/${id}`;
-    const response = await fetch(url, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({ slug: 'new-slug' }),
-    });
-
-    console.log(response);
-
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-async function handleDelete(e: React.MouseEvent<HTMLButtonElement>, id: string) {
+async function handleDelete(
+  e: React.MouseEvent<HTMLButtonElement>,
+  id: string,
+) {
   await api.deleteUrl({ id });
 }
 
-function UrlListActions({ id }: { id: string }) {
+function UrlListActions({
+  id,
+  handleEditUrl,
+}: {
+  id: string;
+  handleEditUrl: (id: string) => void;
+}) {
   return (
     <div className={'actions'}>
-      <button className={'action'} onClick={(e) => handleEdit(e, id)}>
+      <button id={id} className={'action'} onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        handleEditUrl((e.target as HTMLInputElement).id);
+      }}
+      >
         Edit
       </button>
       <button className={'action'} onClick={(e) => handleDelete(e, id)}>

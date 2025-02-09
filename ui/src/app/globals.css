@@ -7,14 +7,22 @@ button.action {
     padding: 3px 12px;
 }
 
+
+button.update,
+button.cancel,
 button.shorten {
     margin-left: 10px;
     padding: 8px 16px;
+    min-width: 100px;
 }
 
 .url-input {
     width: 300px;
     padding: 8px;
+}
+
+.url-input.edit {
+    width: 100px;
 }
 
 .result-error {

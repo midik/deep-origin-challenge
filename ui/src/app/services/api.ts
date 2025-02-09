@@ -1,9 +1,11 @@
 // TODO refactor this
 
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || 'http://localhost:3000';
+
 export const api = {
 
   getUrls: async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/url`, {
+    const response = await fetch(`${backendUrl}/url`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -15,7 +17,7 @@ export const api = {
   },
 
   postUrl: async ({ url }: { url: string }): Promise<string> => {
-    const response = await fetch(`${process.env.BACKEND_URL}/url`, {
+    const response = await fetch(`${backendUrl}/url`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -31,8 +33,20 @@ export const api = {
     return `${baseUrl}/${slug}`;
   },
 
+  patchUrl: async ({ id, slug }: { id: string; slug: string }) => {
+    const response = await fetch(`${backendUrl}/url/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({ slug }),
+    });
+    return response.json();
+  },
+
   deleteUrl: async ({ id }: { id: string }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/url`, {
+    const response = await fetch(`${backendUrl}/url`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

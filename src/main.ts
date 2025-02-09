@@ -17,7 +17,7 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('URL Shortener API')
+    .setTitle('URL AddEditUrl API')
     .setDescription('This is a URL shortener API')
     .setVersion('1.0')
     .addTag('shotener')
