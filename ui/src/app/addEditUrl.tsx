@@ -84,11 +84,12 @@ function AddEditUrl({
         {isEditMode && (
           <span>
             <button
+              id={editableUrl.id}
               onClick={(e) => {
                 e.preventDefault();
                 handleUpdate(
-                  (e.target as HTMLInputElement).id,
-                  (e.target as HTMLInputElement).value,
+                  editableUrl.id,
+                  editableUrl.slug,
                 );
               }}
               className={'update'}

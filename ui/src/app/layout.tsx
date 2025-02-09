@@ -44,6 +44,7 @@ export default function RootLayout() {
     id: string,
     slug: string,
   ) {
+    console.log({ id, slug });
     await api.patchUrl({ id, slug });
     setIsEditMode(false);
   }
