@@ -3,7 +3,7 @@ import { api } from '@/app/services/api';
 import { GetUrlResponseDto } from '../../src/url/dto/get-url.response.dto';
 
 
-let urlMap: string[] | null = null;
+let urlMap: Record<string, GetUrlResponseDto> | null = null;
 
 export async function middleware(request: NextRequest) {
   // skip redirecting for the root path (admin page)
@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
   // fetch urls from the database (if not already fetched)
   if (!urlMap) {
     const urls = await api.getUrls();
-    urlMap = urls.reduce((acc, url) => {
+    urlMap = urls.reduce((acc: Record<string, GetUrlResponseDto>, url: GetUrlResponseDto) => {
       acc[url.slug] = url;
       return acc;
     }, {});
@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const pathname = request.nextUrl.pathname.slice(1);
-  const redirectData = (await urlMap[pathname]) as GetUrlResponseDto;
+  const urlEntry = urlMap[pathname];
 
   if (urlEntry) {
     // increment tracking count (no wait)
