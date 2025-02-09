@@ -25,3 +25,13 @@ services:
       DATABASE_URL: postgres://deep:deep@db:5432/deep
       BASE_URL: http://localhost:3001
 
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: ui
+    ports:
+      - 3001:3001
+    environment:
+      PORT: 3001
