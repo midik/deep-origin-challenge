@@ -17,8 +17,6 @@ function UrlList({
   handleDeleteUrl: (id: string) => void;
   fetchUrls: () => void;
 }) {
-
-  console.log({ urls, isEditMode, handleEditUrl, handleDeleteUrl, fetchUrls });
   return (
     <div>
       <table>

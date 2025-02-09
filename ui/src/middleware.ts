@@ -27,26 +27,25 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!urlMap) {
-    console.log('urlMap is empty');
+    console.log('no URL entries found');
     return NextResponse.next();
   }
 
   const pathname = request.nextUrl.pathname.slice(1);
   const redirectData = (await urlMap[pathname]) as GetUrlResponseDto;
 
-  if (redirectData) {
+  if (urlEntry) {
     // increment tracking count (no wait)
-    api.patchUrlTracking({ id: redirectData.id })
-      .then(() => console.log(`hit: ${redirectData.id}`))
+    api.patchUrlTracking({ id: urlEntry.id })
+      .then(() => console.log(`hit: ${urlEntry.id}`))
       .catch((err) => console.error(err));
 
-    const destination = redirectData.url;
+    const destination = urlEntry.url;
     return NextResponse.redirect(destination, 307);
   }
 
   // no redirect found, redirect to 404
+  // todo fix this
   const base = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3001';
-  console.log({ base });
-
   return NextResponse.rewrite(`${base}/404`);
 }

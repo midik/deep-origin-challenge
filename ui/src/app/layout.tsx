@@ -27,26 +27,23 @@ export default function RootLayout() {
     const editableUrl = urls.find((url) => url.id === id);
     setIsEditMode(true);
     setEditableUrl(editableUrl as Pick<Url, 'id' | 'slug' | 'baseUrl'>);
-    console.log({ isEditMode, editableUrl });
+    // console.log({ isEditMode, editableUrl });
   }
 
   async function handleDeleteUrl(id: string) {
-    console.log({ id });
     await api.deleteUrl({ id });
     await fetchUrls();
   }
 
   function handleCancelUpdate() {
     setIsEditMode(false);
-    console.log({ isEditMode });
+    // console.log({ isEditMode });
   }
 
   async function handleUpdate(id: string, slug: string) {
     setIsEditMode(false);
     await api.patchUrl({ id, slug });
     await fetchUrls();
-    console.log({ id, slug });
-    console.log({ isEditMode });
   }
 
   return (
