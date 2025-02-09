@@ -1,13 +1,12 @@
 import React from 'react';
 import { GetUrlResponseDto } from '../../../src/url/dto/get-url.response.dto';
-
-const backendUrl = process.env.BACKEND_URL;
+import UrlListActions from '@/app/UrlListActions';
 
 async function UrlList() {
   let urls = [];
 
   try {
-    const response = await fetch(`${backendUrl}/url`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/url`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -30,10 +29,7 @@ async function UrlList() {
             return (
               <tr key={'tr-' + url.id}>
                 <td>
-                  <div className={'actions'}>
-                    <button className={'action'}>Edit</button>
-                    <button className={'action'}>Delete</button>
-                  </div>
+                  <UrlListActions id={url.id} />
                 </td>
                 <td className="short-url">
                   <a href={shortUrl}>{shortUrl}</a>
