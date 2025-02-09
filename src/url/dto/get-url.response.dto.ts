@@ -23,6 +23,9 @@ export class GetUrlResponseDto extends Url {
   @ApiProperty()
   lastVisitedAt: Date;
 
+  @ApiProperty()
+  createdAt: Date;
+
   constructor(partial: Partial<GetUrlResponseDto>) {
     super();
     Object.assign(this, partial);

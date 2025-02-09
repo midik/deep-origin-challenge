@@ -20,12 +20,13 @@ model User {
 }
 
 model Url {
-  id      String @id @default(cuid())
-  url     String
-  baseUrl String
-  slug    String @unique
-  userId  String
+  id            String    @id @default(cuid())
+  url           String
+  baseUrl       String
+  slug          String    @unique
+  userId        String
   visits        Int       @default(0)
-  lastVisitedAt DateTime?
-  User    User   @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  lastVisitedAt DateTime? @db.Timestamp(0)
+  createdAt     DateTime? @db.Timestamp(0) @default(now())
+  User          User      @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: NoAction)
 }

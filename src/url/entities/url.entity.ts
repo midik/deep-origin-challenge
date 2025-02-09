@@ -4,6 +4,7 @@ export class Url {
   baseUrl: string;
   slug: string;
   visits: number;
+  createdAt: Date;
   lastVisitedAt: Date;
   userId: string;
 }

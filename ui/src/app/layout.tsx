@@ -69,6 +69,7 @@ export default function RootLayout() {
             isEditMode={isEditMode}
             handleEditUrl={handleEditUrl}
             handleDeleteUrl={handleDeleteUrl}
+            fetchUrls={fetchUrls}
           />
         </div>
       </body>

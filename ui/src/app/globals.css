@@ -46,11 +46,21 @@ button.shorten {
 }
 
 td.short-url {
-    width: 240px;
+    width: 300px;
     text-align: left;
 }
 
-td.td-original-url {
+td.original-url {
+    width: 200px;
+    text-align: left;
+}
+
+td.visits {
+    width: 30px;
+    text-align: right;
+}
+
+td.datetime {
     width: 300px;
     text-align: right;
 }
