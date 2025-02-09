@@ -6,10 +6,14 @@ import UrlListActions from '@/app/components/UrlListActions';
 
 function UrlList({
   urls = [],
+  isEditMode,
   handleEditUrl,
+  handleDeleteUrl,
 }: {
-  urls: GetUrlResponseDto[],
-  handleEditUrl: (id: string) => void,
+  urls: GetUrlResponseDto[];
+  isEditMode: boolean;
+  handleEditUrl: (id: string) => void;
+  handleDeleteUrl: (id: string) => void;
 }) {
   return (
     <div>
@@ -20,7 +24,12 @@ function UrlList({
             return (
               <tr key={'tr-' + url.id}>
                 <td>
-                  <UrlListActions id={url.id} handleEditUrl={handleEditUrl} />
+                  <UrlListActions
+                    id={url.id}
+                    isEditMode={isEditMode}
+                    handleEditUrl={handleEditUrl}
+                    handleDeleteUrl={handleDeleteUrl}
+                  />
                 </td>
                 <td className="short-url">
                   <a href={shortUrl}>{shortUrl}</a>

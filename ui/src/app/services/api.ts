@@ -11,9 +11,8 @@ export const api = {
     });
     if (response.ok) {
       return response.json();
-    } else {
-      console.error('Error:', response.statusText);
     }
+    console.error('Error:', response.statusText);
   },
 
   postUrl: async ({ url }: { url: string }): Promise<string> => {
@@ -46,7 +45,7 @@ export const api = {
   },
 
   deleteUrl: async ({ id }: { id: string }) => {
-    const response = await fetch(`${backendUrl}/url`, {
+    const response = await fetch(`${backendUrl}/url/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -54,9 +53,6 @@ export const api = {
       },
       body: JSON.stringify({ id }),
     });
-
-    alert('Not implemented yet');
-
-    return response;
+    return await response.json();
   },
 };

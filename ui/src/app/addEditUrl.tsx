@@ -6,14 +6,14 @@ import React, { useState } from 'react';
 import { api } from '@/app/services/api';
 
 function AddEditUrl({
-  onRefresh,
+  onUrlListRefresh,
   isEditMode,
   editableUrl,
   setEditableUrl,
   handleUpdate,
   handleCancelUpdate,
 }: {
-  onRefresh: () => void;
+  onUrlListRefresh: () => void;
   isEditMode: boolean;
   editableUrl: { id: string; baseUrl: string; slug: string };
   setEditableUrl: (url: { id: string; baseUrl: string; slug: string }) => void;
@@ -38,7 +38,7 @@ function AddEditUrl({
     try {
       const shortUrl = await api.postUrl({ url: inputUrl });
       setShortUrl(shortUrl);
-      onRefresh();
+      onUrlListRefresh();
       setSuccess(true);
     } catch (err) {
       console.error(err);

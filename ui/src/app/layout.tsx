@@ -4,11 +4,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import UrlList from '@/app/components/UrlList';
 import AddEditUrl from '@/app/addEditUrl';
 import { api } from '@/app/services/api';
+import { Url } from '@prisma/client';
 import './globals.css';
 import { GetUrlResponseDto } from '../../../src/url/dto/get-url.response.dto';
-import { Url } from '@prisma/client';
-
-
 
 export default function RootLayout() {
   const [isEditMode, setIsEditMode] = useState(false); // remove this
@@ -25,14 +23,17 @@ export default function RootLayout() {
 
   useEffect(() => void fetchUrls(), [fetchUrls]);
 
-  function handleEditUrl(
-    id: string,
-  ) {
+  function handleEditUrl(id: string) {
     const editableUrl = urls.find((url) => url.id === id);
     setIsEditMode(true);
     setEditableUrl(editableUrl as Pick<Url, 'id' | 'slug' | 'baseUrl'>);
-
     console.log({ isEditMode, editableUrl });
+  }
+
+  async function handleDeleteUrl(id: string) {
+    console.log({ id });
+    await api.deleteUrl({ id });
+    await fetchUrls();
   }
 
   function handleCancelUpdate() {
@@ -40,15 +41,13 @@ export default function RootLayout() {
     console.log({ isEditMode });
   }
 
-  async function handleUpdate(
-    id: string,
-    slug: string,
-  ) {
-    console.log({ id, slug });
-    await api.patchUrl({ id, slug });
+  async function handleUpdate(id: string, slug: string) {
     setIsEditMode(false);
+    await api.patchUrl({ id, slug });
+    await fetchUrls();
+    console.log({ id, slug });
+    console.log({ isEditMode });
   }
-
 
   return (
     <html lang="en">
@@ -57,7 +56,7 @@ export default function RootLayout() {
           <h1>URL Shortener</h1>
           <hr />
           <AddEditUrl
-            onRefresh={fetchUrls}
+            onUrlListRefresh={fetchUrls}
             isEditMode={isEditMode}
             editableUrl={editableUrl}
             setEditableUrl={setEditableUrl}
@@ -65,7 +64,12 @@ export default function RootLayout() {
             handleCancelUpdate={handleCancelUpdate}
           />
           <hr />
-          <UrlList urls={urls} handleEditUrl={handleEditUrl} />
+          <UrlList
+            urls={urls}
+            isEditMode={isEditMode}
+            handleEditUrl={handleEditUrl}
+            handleDeleteUrl={handleDeleteUrl}
+          />
         </div>
       </body>
     </html>
