@@ -10,7 +10,6 @@ import { UrlService } from '../src/url/url.service';
 import { UrlModule } from '../src/url/url.module';
 import { UrlShortenerModule } from '../src/url-shortener/url-shortener.module';
 import { UserModule } from '../src/user/user.module';
-import { UrlTrackModule } from '../src/url-track/url-track.module';
 import { DbModule } from '../src/prisma-service/db.module';
 import { PrismaClient } from '@prisma/client';
 import { Reflector } from '@nestjs/core';
@@ -41,7 +40,6 @@ describe('e2e / url ', () => {
         UrlShortenerModule,
         UrlModule,
         UserModule,
-        UrlTrackModule,
         DbModule,
         ThrottlerModule.forRoot([
           {
