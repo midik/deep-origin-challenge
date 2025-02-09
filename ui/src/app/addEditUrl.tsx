@@ -42,8 +42,7 @@ function AddEditUrl({
       setSuccess(true);
     } catch (err) {
       console.error(err);
-      // @ts-ignore
-      setError(err.message || 'Something went wrong');
+      setError((err as Error).message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
