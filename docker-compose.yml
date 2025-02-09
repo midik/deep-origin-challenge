@@ -5,8 +5,23 @@ services:
     restart: unless-stopped
     container_name: db
     ports:
-      - 15432:5432
+      - 5432:5432
     environment:
-        POSTGRES_USER: deep
-        POSTGRES_PASSWORD: deep
-        POSTGRES_DB: deep
+      POSTGRES_USER: deep
+      POSTGRES_PASSWORD: deep
+      POSTGRES_DB: deep
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: app
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://deep:deep@db:5432/deep
+      BASE_URL: http://localhost:3001
+
