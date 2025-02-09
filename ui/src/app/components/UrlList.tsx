@@ -1,25 +1,10 @@
+'use client';
+
 import React from 'react';
-import { GetUrlResponseDto } from '../../../src/url/dto/get-url.response.dto';
-import UrlListActions from '@/app/UrlListActions';
+import { GetUrlResponseDto } from '../../../../src/url/dto/get-url.response.dto';
+import UrlListActions from '@/app/components/UrlListActions';
 
-async function UrlList() {
-  let urls = [];
-
-  try {
-    const response = await fetch(`${process.env.BACKEND_URL}/url`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    urls = await response.json();
-  } catch (err) {
-    console.error(err);
-  }
-
-  console.log(urls);
-
+function UrlList({ urls = [] }: { urls: GetUrlResponseDto[] }) {
   return (
     <div>
       <table>

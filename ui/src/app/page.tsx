@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import { api } from '@/app/services/api';
 
-const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
 
-function Page() {
+function Page({ onRefresh }: { onRefresh: () => void }) {
   const [inputUrl, setInputUrl] = useState('http://google.com');
   const [shortUrl, setShortUrl] = useState('');
   const [success, setSuccess] = useState(false);
@@ -19,26 +19,9 @@ function Page() {
     setCopied(false);
 
     try {
-      const response = await fetch(`${backendUrl}/url`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          url: inputUrl,
-          // userId: 'b9077855-7290-4c63-a13a-33f32f95840e', // todo
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Something went wrong');
-      }
-
-      const data = await response.json();
-
-      const { baseUrl, slug } = data;
-      const fullShortUrl = `${baseUrl}/${slug}`;
-      setShortUrl(fullShortUrl);
+      const shortUrl = await api.postUrl({ url: inputUrl });
+      setShortUrl(shortUrl);
+      onRefresh();
       setSuccess(true);
 
     } catch (err) {

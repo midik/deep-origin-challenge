@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
+import { api } from '@/app/services/api';
 
-async function handleEdit(e, id: string) {
+async function handleEdit(e: React.MouseEvent<HTMLButtonElement>, id: string) {
   e.preventDefault();
 
   try {
@@ -23,24 +24,8 @@ async function handleEdit(e, id: string) {
   }
 }
 
-async function handleDelete(e, id: string) {
-  e.preventDefault();
-
-  alert('Not implemented yet');
-
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/url`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({ id }),
-    });
-
-  } catch (err) {
-    console.error(err);
-  }
+async function handleDelete(e: React.MouseEvent<HTMLButtonElement>, id: string) {
+  await api.deleteUrl({ id });
 }
 
 function UrlListActions({ id }: { id: string }) {
