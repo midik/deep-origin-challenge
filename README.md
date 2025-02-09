@@ -7,10 +7,21 @@ It allows users to create shortened versions of links to make them easier to sha
 ## Setting up the project
 ### Development mode
 
+#### Prerequisites
+By default, backend expects PostgreSQL serving by the following URL: `postgresql://deep:deep@localhost:5432/deep`. This can be changed in the `/.env` file.
+As an option, PostgresSQL can be spin up using Docker:
+```bash
+docker run --name postgres-dev -e POSTGRES_PASSWORD=deep -e POSTGRES_USER=deep -e POSTGRES_DB=deep -p 5432:5432 -d postgres
+```
+
 #### Backend
 ```bash
 npm install
-npm run start  # or `npm run start:dev`
+
+# This will create the database schema and seed the database with some data
+npm run migrate:deploy && npm run seed
+
+npm run start:dev
 ```
 This will start the API on http://localhost:3000
 
@@ -18,6 +29,7 @@ This will start the API on http://localhost:3000
 ```bash
 cd ui
 npm install
+npm run dev
 ```
 This will start the frontend on http://localhost:3001
 
