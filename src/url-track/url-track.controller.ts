@@ -1,9 +1,14 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Patch } from '@nestjs/common';
 import { UrlTrackService } from './url-track.service';
 
 @Controller('url-track')
 export class UrlTrackController {
   constructor(private readonly urlTrackService: UrlTrackService) {}
+
+  @Patch(':id')
+  update(@Param('id') id: string) {
+    return this.urlTrackService.update(id);
+  }
 
   @Get()
   findAll() {
@@ -12,6 +17,6 @@ export class UrlTrackController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.urlTrackService.findOne(+id);
+    return this.urlTrackService.findOne(id);
   }
 }
