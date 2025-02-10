@@ -81,7 +81,7 @@ This will start the frontend on http://localhost:3001
 :white_check_mark: Update API to follow a known spec (such as json:api)
 
 #### Notes
-:information_source: (1) Despite trying different approaches, my lack of experience with NextJS and the time constraints led me to deprioritize the 404 page feature. this feature.
+:information_source: (1) Despite trying different approaches, my lack of experience with NextJS and the time constraints led me to deprioritize this feature.
 
 :information_source: (2) User accounts and URL-to-user relationships are implemented on the backend side, but the frontend currently uses a hardcoded mock user.
 
