@@ -47,28 +47,42 @@ This will start the frontend on http://localhost:3001
 
 ### Must have
 :white_check_mark: Build a web page with a form for entering a URL
+
 :white_check_mark: When the form is submitted, return a shortened version of the URL
+
 :white_check_mark: Save a record of the shortened URL to a database
+
 :white_check_mark: Ensure the slug of the URL (abc123 in the screenshot above) is unique
+
 :white_check_mark: When the shortened URL is accessed, redirect to the stored URL
+
 :information_source: (1) If an invalid slug is accessed, display a 404 Not Found page
 
 ###  Required Tech
 :white_check_mark: React w/ typescript for the front end
+
 :white_check_mark: Node.JS w/ typescript for the backend
+
 :white_check_mark: Docker
 
 ### Extra Credit
 :information_source: (2) Add support for accounts so people can view the URLs they created
+
 :white_check_mark: Validate the URL provided is an actual URL
+
 :white_check_mark: Make it easy to copy the shortened URL to the clipboard
+
 :white_check_mark: Allow users to modify the slug of their URL
+
 :white_check_mark: Track visits to the shortened URL
+
 :white_check_mark: Add rate-limiting to prevent bad-actors from spamming the service
+
 :white_check_mark: Update API to follow a known spec (such as json:api)
 
 #### Notes
-:information_source: (1) Despite trying different approaches, my lack of experience with NextJS and the time constraints led me to deprioritize the 404 page feature. this feature.   
+:information_source: (1) Despite trying different approaches, my lack of experience with NextJS and the time constraints led me to deprioritize the 404 page feature. this feature.
+
 :information_source: (2) User accounts and URL-to-user relationships are implemented on the backend side, but the frontend currently uses a hardcoded mock user.
 
 I'm open to discussing the implementation of these features and any other improvements.
